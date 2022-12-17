@@ -47,7 +47,7 @@
 
 
 function render(array, node) {
-  // node.innerHTML = "";
+  node.innerHTML = "";
   array.forEach((item) => {
     var newBox = document.createElement("div");
     newBox.classList.add(
@@ -167,6 +167,6 @@ elForm.addEventListener('input', (evt) => {
       newArr.push(el)
     }
   })
-  render(newArr ,)
+  render(newArr , elRow)
   newArr = []
 })
