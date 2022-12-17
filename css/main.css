@@ -1,0 +1,23 @@
+.search-input {
+  width: 200px;
+  display: inline-block;
+  height: 30px !important;
+  border: none !important;
+}
+#select-js:focus {
+  outline: none !important;
+}
+.top-films {
+  background-color: aqua;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+#select-js {
+  height: fit-content;
+  background-color: blue;
+  color: white;
+}
