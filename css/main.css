@@ -4,7 +4,7 @@
   height: 30px !important;
   border: none !important;
 }
-#select-js:focus {
+.select-css:focus {
   outline: none !important;
 }
 .top-films {
@@ -16,7 +16,7 @@
   justify-content: space-between;
   height: 50px;
 }
-#select-js {
+.select-css {
   height: fit-content;
   background-color: blue;
   color: white;

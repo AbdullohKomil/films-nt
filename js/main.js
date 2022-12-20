@@ -59,7 +59,7 @@ function render(array, node) {
       "ms-2",
       "text-light",
     );
-    var appendBox = elRow.appendChild(newBox);
+    var appendBox = node.appendChild(newBox);
   
     var elImg = document.createElement("img");
     elImg.setAttribute("src", item.poster);
@@ -170,3 +170,36 @@ elForm.addEventListener('input', (evt) => {
   render(newArr , elRow)
   newArr = []
 })
+
+let elSelect_2 = document.querySelector("#select-js-2");
+elSelect_2.addEventListener("change", () => {
+  let elSelect_2Val = elSelect_2.value;
+  if (elSelect_2Val != "default") {
+    if (elSelect_2Val == "A-Z") {
+      const filmsSort = films.sort((a, b) => {
+        if (a.title > b.title) {
+          return 1;
+        }
+        if (a.title < b.title) {
+          return -1;
+        }
+        return 0;
+      });
+      render(filmsSort, elRow);
+    } else if (elSelect_2Val == "Z-A") {
+      const filmsSort_2 = films.sort((a, b) => {
+        if (a.title > b.title) {
+          return -1;
+        }
+        if (a.title < b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      render(filmsSort_2, elRow);
+    }
+  }else {
+    window.location.reload();
+  }
+});
+
