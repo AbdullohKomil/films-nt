@@ -15,24 +15,27 @@
   </head>
   <body class="bg-primary">
     <div class="top-films position-sticky sticky-top">
-      <select id="select-js" class="select-css">
+      <select id="select-js" class="select-css form-select w-25">
         <option value="All">All</option>
       </select>
-      <select id="select-js-2" class="select-css">
+      <select id="select-js-2" class="select-css form-select w-25">
         <option value="default">default</option>
         <option value="A-Z">A-Z</option>
         <option value="Z-A">Z-A</option>
       </select>
-      <form class="js-form">
+      <form class="js-form w-25">
         <input
           type="search"
-          class="form-control search-input js-search"
+          class="form-control w-100 js-search"
           placeholder="search-films "
         />
       </form>
     </div>
     <div class="container">
-      <div class="row justify-content-between"></div>
+      <ul class="bookmark-js-list d-flex">
+        
+      </ul>
+      <div class="row justify-content-between mt-5"></div>
     </div>
 
     <script src="./js/films.js"></script>

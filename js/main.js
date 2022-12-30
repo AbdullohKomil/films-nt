@@ -45,7 +45,8 @@
 
 // --------------------------------------------UY ISHI------------------------------------------------------------------
 
-
+let elBookmarkList = document.querySelector(".bookmark-js-list");
+let bookmarkList = new Set();
 function render(array, node) {
   node.innerHTML = "";
   array.forEach((item) => {
@@ -57,31 +58,57 @@ function render(array, node) {
       "bg-success",
       "mb-5",
       "ms-2",
-      "text-light",
+      "text-light"
     );
     var appendBox = node.appendChild(newBox);
-  
+
     var elImg = document.createElement("img");
     elImg.setAttribute("src", item.poster);
     elImg.setAttribute("width", "200px");
     newBox.appendChild(elImg);
-  
+
     var elTitle = document.createElement("h4");
     elTitle.innerHTML = item.title;
     newBox.appendChild(elTitle);
-  
+
     var elRelease = document.createElement("p");
     elRelease.innerHTML = item.release_date;
-    elRelease.classList.add("text-warning")
-    newBox.appendChild(elRelease)
-  
-    var elGenr = document.createElement("p")
-    elGenr.innerHTML = item.genres
-    elGenr.classList.add('w-100')
-    newBox.appendChild(elGenr)
+    elRelease.classList.add("text-warning");
+    newBox.appendChild(elRelease);
+
+    var elGenr = document.createElement("p");
+    elGenr.innerHTML = item.genres;
+    elGenr.classList.add("w-100");
+    newBox.appendChild(elGenr);
+
+    const newBtn = document.createElement("button");
+    newBtn.textContent = "bookmark";
+    newBtn.dataset.filmId = item.id;
+    newBtn.setAttribute("class", "btn btn-light js-bookmark");
+    newBox.appendChild(newBtn);
   });
 }
 var elRow = document.querySelector(".row");
+
+const renderBookmarkFilms = (array, node) => {
+  node.innerHTML = "";
+  array.forEach((item) => {
+    const newItem = document.createElement("li");
+    const newText = document.createElement("p");
+    const newDeleteButton = document.createElement("button");
+
+    newItem.setAttribute("class", " align-items-center p-1 bg-dark d-flex ");
+    newText.setAttribute("class", "m-0 text-light me-3");
+    newDeleteButton.setAttribute("class", "delete-bookmark");
+
+    newText.textContent = item.title;
+    newDeleteButton.innerHTML = "&times;";
+    newDeleteButton.dataset.filmId = item.id;
+    newItem.appendChild(newText);
+    newItem.appendChild(newDeleteButton);
+    node.appendChild(newItem);
+  });
+};
 
 render(films, elRow);
 var elSelect = document.querySelector("#select-js");
@@ -98,7 +125,7 @@ films.forEach((item) => {
     "bg-success",
     "mb-5",
     "ms-2",
-    "text-light",
+    "text-light"
   );
   var appendBox = elRow.appendChild(newBox);
 
@@ -113,16 +140,16 @@ films.forEach((item) => {
 
   var elRelease = document.createElement("p");
   elRelease.innerHTML = item.release_date;
-  elRelease.classList.add("text-warning")
-  newBox.appendChild(elRelease)
+  elRelease.classList.add("text-warning");
+  newBox.appendChild(elRelease);
 
-  var elGenr = document.createElement("p")
-  elGenr.innerHTML = item.genres
-  elGenr.classList.add('w-100')
-  newBox.appendChild(elGenr)
+  var elGenr = document.createElement("p");
+  elGenr.innerHTML = item.genres;
+  elGenr.classList.add("w-100");
+  newBox.appendChild(elGenr);
 });
 
-var elSelect = document.querySelector("#select-js")
+var elSelect = document.querySelector("#select-js");
 elSelect.addEventListener("change", function () {
   newArr = [];
 
@@ -134,7 +161,7 @@ elSelect.addEventListener("change", function () {
       }
     });
     render(newArr, elRow);
-  }else {
+  } else {
     render(films, elRow);
   }
 });
@@ -155,21 +182,21 @@ newSet.forEach((type) => {
   elSelect.appendChild(elOption);
 });
 
-var elForm = document.querySelector(".js-form")
-var elInput = document.querySelector(".js-search")
-let Arr2  =[]
-elForm.addEventListener('input', (evt) => {
-  elRow.innerHTML = ""
-  evt.preventDefault()
-  let elInputVal = elInput.value.toLocaleLowerCase(); 
+var elForm = document.querySelector(".js-form");
+var elInput = document.querySelector(".js-search");
+let Arr2 = [];
+elForm.addEventListener("input", (evt) => {
+  elRow.innerHTML = "";
+  evt.preventDefault();
+  let elInputVal = elInput.value.toLocaleLowerCase();
   films.forEach((el) => {
-    if(el.title.toLocaleLowerCase().includes(elInputVal)) {
-      newArr.push(el)
+    if (el.title.toLocaleLowerCase().includes(elInputVal)) {
+      newArr.push(el);
     }
-  })
-  render(newArr , elRow)
-  newArr = []
-})
+  });
+  render(newArr, elRow);
+  newArr = [];
+});
 
 let elSelect_2 = document.querySelector("#select-js-2");
 elSelect_2.addEventListener("change", () => {
@@ -198,8 +225,29 @@ elSelect_2.addEventListener("change", () => {
       });
       render(filmsSort_2, elRow);
     }
-  }else {
+  } else {
     window.location.reload();
   }
 });
 
+elRow.addEventListener("click", (evt) => {
+  if (evt.target.matches(".js-bookmark")) {
+    const filmId = evt.target.dataset.filmId;
+
+    const findedFilm = films.find((film) => film.id === filmId);
+
+    bookmarkList.add(findedFilm);
+    renderBookmarkFilms(bookmarkList, elBookmarkList);
+  }
+});
+
+elBookmarkList.addEventListener("click", (evt) => {
+  if (evt.target.matches(".delete-bookmark")) {
+    const filmId = evt.target.dataset.filmId;
+
+    const findedFilm = films.find((film) => film.id === filmId);
+
+    bookmarkList.delete(findedFilm);
+    renderBookmarkFilms(bookmarkList, elBookmarkList);
+  }
+});
